@@ -1,4 +1,4 @@
 metar-log.txt
-metarpid.pid
+*.pid
 
 __pycache__/
