@@ -75,7 +75,7 @@ USE_LIGHT_SENSOR = True						# Decide whether using external light sensor
 
 # ----- Blink/Fade functionality for Wind and Lightning -----
 # Do you want the METARMap to be static to just show flight conditions, or do you also want blinking/fading based on current wind conditions
-ACTIVATE_WINDCONDITION_ANIMATION = False	# Set this to False for Static or True for animated wind conditions
+ACTIVATE_WINDCONDITION_ANIMATION = True		# Set this to False for Static or True for animated wind conditions
 # Do you want the Map to Flash white for lightning in the area
 ACTIVATE_LIGHTNING_ANIMATION = False		# Set this to False for Static or True for animated Lightning
 # Fade instead of blink
@@ -141,9 +141,8 @@ if adafruit_bh1750 is not None and USE_LIGHT_SENSOR:
 	else:
 		p = LED_BRIGHTNESS_HIGH_HIGH							# Brightness high-high
 
-	print("Measured brightness: %.2f Lux"%lux + "; setting LEDs to " + str(p))
-
 	LED_BRIGHTNESS = p
+	print("Measured brightness: %.2f Lux"%lux + "; setting LEDs to " + str(LED_BRIGHTNESS))
 
 
 # Figure out sunrise/sunset times if astral is being used
