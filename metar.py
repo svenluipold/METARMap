@@ -320,6 +320,11 @@ displayAirportCounter = 0
 numAirports = len(stationList)
 
 
+# Write dataset to save for demos
+with open("/home/atc/METARMap/demo-data/" + datetime.datetime.now().strftime('%d-%m-%Y %H:%M') + ".pkl", "wb") as demoDataSetSave:
+    pickle.dump(conditionDict, demoDataSetSave)
+
+
 if DEMO_MODE == True:
 	looplimit = DEMO_DATA_FILES					# Setting cyles to amount of demo datasets (no wind cycles can/will be displayed)
 
@@ -330,7 +335,7 @@ while looplimit > 0:
 	i = 0
 
 	# Load according demo dataaset
-	if (DEMO_MODE) == True:
+	if DEMO_MODE == True:
 		print("Loading demo dataset: " + str(demoDataSet))
 		with open("/home/atc/METARMap/" + str(demoDataSet) + ".pkl" , "rb") as demoDict:
 			conditionDict = pickle.load(demoDict)
