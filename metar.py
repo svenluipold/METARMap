@@ -4,6 +4,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 import board
 import neopixel
+import pickle
 import time
 import datetime
 try:				
@@ -112,6 +113,10 @@ ACTIVATE_EXTERNAL_METAR_DISPLAY = False		# Set to True if you want to display ME
 DISPLAY_ROTATION_SPEED = 5.0				# Float in seconds, e.g 2.0 for two seconds
 
 
+# ----- Demo Mode -----
+DEMO_MODE 			= False
+DEMO_DATA_FILES 	= 9
+
 
 # ---------------------------------------------------------------------------
 # ------------END OF CONFIGURATION-------------------------------------------
@@ -173,6 +178,7 @@ pixels = neopixel.NeoPixel(LED_PIN, LED_COUNT, brightness = LED_BRIGHTNESS_DIM i
 with open("/home/atc/METARMap/airports") as f:
 	airports = f.readlines()
 airports = [x.strip() for x in airports]
+
 try:
 	with open("/home/atc/METARMap/displayairports") as f2:
 		displayairports = f2.readlines()
@@ -190,7 +196,6 @@ if len(airports) > LED_COUNT:
 	quit()
 
 # Retrieve METAR from aviationweather.gov data server
-# Details about parameters can be found here: https://aviationweather.gov/data/api/#/Dataserver/dataserverMetars
 url = " https://aviationweather.gov/api/data/metar?ids=" + ",".join([item for item in airports if item != "NULL"]) + "&format=xml"
 print(url)
 req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 Edg/86.0.622.69'})
@@ -211,8 +216,8 @@ for metar in root.iter('METAR'):
 
 
 	# No flight category is provided (may happen sometimes in germany). Trying to calculate manually.
-	# Typically then no sky_condition is present --> sky clear.
-	# Then only visibility is being taken into account and resulting flight condition is calculated based on visibility.
+	# Typically then no sky_condition is present --> sky clear. Only visibility is being taken into 
+	# account and resulting flight condition is calculated based on visibility.
 	if metar.find('flight_category') is None or metar.find('flight_category').text is None:
 		print("Missing flight condition for " + stationId + ". Trying to obtain manually.")
 
@@ -313,8 +318,24 @@ windCycle = False
 displayTime = 0.0
 displayAirportCounter = 0
 numAirports = len(stationList)
+
+
+if DEMO_MODE == True:
+	looplimit = DEMO_DATA_FILES					# Setting cyles to amount of demo datasets (no wind cycles can/will be displayed)
+
+demoDataSet = 1
+
+
 while looplimit > 0:
 	i = 0
+
+	# Load according demo dataaset
+	if (DEMO_MODE) == True:
+		print("Loading demo dataset: " + str(demoDataSet))
+		with open("/home/atc/METARMap/" + str(demoDataSet) + ".pkl" , "rb") as demoDict:
+			conditionDict = pickle.load(demoDict)
+		demoDataSet += 1
+
 	for airportcode in airports:
 		# Skip NULL entries
 		if airportcode == "NULL":
