@@ -115,6 +115,7 @@ DISPLAY_ROTATION_SPEED = 5.0				# Float in seconds, e.g 2.0 for two seconds
 
 # ----- Demo Mode -----
 DEMO_MODE 			= False
+DEMO_DATA_LOCATION	= ''
 DEMO_DATA_FILES 	= 9
 
 
@@ -207,19 +208,21 @@ conditionDict = { "NULL": {"flightCategory" : "", "windDir": "", "windSpeed" : 0
 conditionDict.pop("NULL")
 stationList = []
 
+
 for metar in root.iter('METAR'):
+
+	# If station_id is not privided loop will skip and start with next one
 	if metar.find('station_id') is None or metar.find('station_id').text is None:
 		print("Missing station id, skipping.")
 		continue
 	
 	stationId = metar.find('station_id').text
 
-
 	# No flight category is provided (may happen sometimes in germany). Trying to calculate manually.
 	# Typically then no sky_condition is present --> sky clear. Only visibility is being taken into 
 	# account and resulting flight condition is calculated based on visibility.
 	if metar.find('flight_category') is None or metar.find('flight_category').text is None:
-		print("Missing flight condition for " + stationId + ". Trying to obtain manually.")
+		print("Missing flight condition for " + stationId + ". Assuming sky clear.")
 
 		# Manually get visibility and cut off '+' i. E. '6+'
 		visibility = metar.find('visibility_statute_mi').text
@@ -228,20 +231,19 @@ for metar in root.iter('METAR'):
 		ceiling = 9999.9
 
 		print("    Reported visibility: " + str(visibility) + " stat. Mi.")
-		print("    Assuming sky clear")
 
 		# Manual calculation of flight_category
 		if (visibility < 1 or ceiling < 500.0 ):
-			print("     --> calculated LIFR")
+			print("     --> LIFR ")
 			flightCategory = "LIFR"
 		elif (visibility <3.0 or ceiling < 1000.0):
-			print("     --> calculated IFR")
+			print("     --> IFR")
 			flightCategory = "IFR"
 		elif (visibility < 5.0 or ceiling < 3000.0):
-			print("     --> calculated MVFR")
+			print("     --> MVFR")
 			flightCategory = "MVFR"
 		else: 
-			print("     --> calculated VFR")
+			print("     --> VFR")
 			flightCategory = "VFR"
 
 
@@ -321,8 +323,8 @@ numAirports = len(stationList)
 
 
 # Write dataset to save for demos
-with open("/home/atc/METARMap/demo-data/" + datetime.datetime.now().strftime('%d-%m-%Y %H:%M') + ".pkl", "wb") as demoDataSetSave:
-    pickle.dump(conditionDict, demoDataSetSave)
+#with open("/home/atc/METARMap/demo-data/" + datetime.datetime.now().strftime('%d-%m-%Y %H:%M') + ".pkl", "wb") as demoDataSetSave:
+#    pickle.dump(conditionDict, demoDataSetSave)
 
 
 if DEMO_MODE == True:
