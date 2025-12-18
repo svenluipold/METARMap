@@ -112,13 +112,13 @@ A external light sensor may be used to dim the LEDs according to the prevailing 
   * `i2cdetect -y 1`
   * --> 0x23 oder 0x5C in scan-table
 
-* Set custom thresholds for LUX-values:
+* Set custom thresholds for LUX-values (may vary depending on sensors used):
 ```python
-LUX_THRESHOLD_LOW 		  = 2
+LUX_THRESHOLD_LOW 		= 2
 LUX_THRESHOLD_LOW_MED 	= 10
-LUX_THRESHOLD_MED 		  = 25
+LUX_THRESHOLD_MED 		= 25
 LUX_THRESHOLD_MED_HIGH 	= 50
-LUX_THRESHOLD_HIGH 		  = 100
+LUX_THRESHOLD_HIGH 		= 100
 ```
 
 * Set according LED-brightness levels:
@@ -142,8 +142,6 @@ If you want an interactive Legend to illustrate the possible behaviors you can d
   * If you are only using the Wind condition feature, but not the Lightning, you will still need the total of 7 LEDs (but the 5th LED for Lightning will just stay blank) or you'd have to change the order in the code
 
 
-
----------- Original doc ---------- 
 
 ## Detailed instructions
 
