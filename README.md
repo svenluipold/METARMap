@@ -5,13 +5,11 @@ Forked from https://github.com/prueker/METARMap on 5.12.2025.
 
 
 # Installation (updated)
-## Setup Raspi
+## Software Setup
 * Install Raspberry Pi OS Lite x64 on SD Card
 * Use `Raspberry Pi Imager` (https://www.raspberrypi.com/software/) and configure settings like `user`, `password`, `hostname` and `wifi`
 * SSH into Raspberry with set credentials
 
-
-## Software Setup
 * Update system
   * `sudo apt-get update`
   * `sudo apt-get upgrade`
@@ -209,4 +207,5 @@ To support the display you need to enable a few new libraries and settings on th
 ## Changelist
 
 To see a list of changes to the metar script over time, refer to [CHANGELIST.md](CHANGELIST.md)
+
 
