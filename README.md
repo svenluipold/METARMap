@@ -23,7 +23,7 @@ Forked from https://github.com/prueker/METARMap on 5.12.2025.
 
 * Activate created environment and install further packages:
   * `source neopixel-env/bin/activate`
-  * Update paket-manager `python -m pip install --upgrade pip setuptools wheel`
+  * (Optional) Update paket-manager `python -m pip install --upgrade pip setuptools wheel`
   * Install neopixel `pip install rpi_ws281x adafruit-blinka adafruit-circuitpython-neopixel`
   * Install astral (optional) `pip install astral`
   * `deactivate`
@@ -208,6 +208,7 @@ To support the display you need to enable a few new libraries and settings on th
 ## Changelist
 
 To see a list of changes to the metar script over time, refer to [CHANGELIST.md](CHANGELIST.md)
+
 
 
 
