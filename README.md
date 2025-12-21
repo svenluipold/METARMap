@@ -28,6 +28,18 @@ Forked from https://github.com/prueker/METARMap on 5.12.2025.
   * Install astral (optional) `pip install astral`
   * `deactivate`
 
+* Test LEDs:
+*  Note: to test LEDs and use the Neopixel library correctly, python mus be executed under sudo permissions within venv.
+*  To do so: `sudo ~/neopixel-env/bin/python`
+*  Execute test-code:
+    ```
+    import board
+    import neopixel
+    
+    pixels = neopixel.NeoPixel(board.D18, 30, auto_write=True, brightness=0.5)
+    pixels.fill((255, 0, 0))
+    ```
+ 
 * Clone this repositiory into your desired folder on the Raspberry Pi.
 
 
@@ -208,6 +220,7 @@ To support the display you need to enable a few new libraries and settings on th
 ## Changelist
 
 To see a list of changes to the metar script over time, refer to [CHANGELIST.md](CHANGELIST.md)
+
 
 
 
