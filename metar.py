@@ -48,10 +48,10 @@ COLOR_HIGH_WINDS 	= (255,255,0) 		# Yellow
 
 # ----- Define lux thresholds and brightnesses-----
 LUX_THRESHOLD_LOW 		= 2
-LUX_THRESHOLD_LOW_MED 	= 10
-LUX_THRESHOLD_MED 		= 25
-LUX_THRESHOLD_MED_HIGH 	= 50
-LUX_THRESHOLD_HIGH 		= 100
+LUX_THRESHOLD_LOW_MED 	= 3
+LUX_THRESHOLD_MED 		= 5
+LUX_THRESHOLD_MED_HIGH 	= 7
+LUX_THRESHOLD_HIGH 		= 10
 
 LED_BRIGHTNESS_LOW		= LED_BRIGHTNESS_DIM		# Lowest brightness (from settings LED_BRIGHTNESS_DIM)
 LED_BRIGHTNESS_LOW_MED	= 0.015
@@ -133,6 +133,8 @@ with open("/home/atc/METARMap/metar-log.txt", "a") as log:
 if adafruit_bh1750 is not None and USE_LIGHT_SENSOR:
 	i2c = board.I2C()
 	lux = adafruit_bh1750.BH1750(i2c).lux
+
+	print("LUX: " + str(lux))
 
 	if lux < LUX_THRESHOLD_LOW:									# Brightness low
 		p = LED_BRIGHTNESS_LOW
